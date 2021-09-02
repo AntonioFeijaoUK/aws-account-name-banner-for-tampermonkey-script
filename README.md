@@ -4,7 +4,7 @@ AWS Tampermonkey scripts
 
 ---
 
-## Tampermonkey
+## Tampermonkey
 
 * <https://www.tampermonkey.net/>
 
@@ -15,5 +15,4 @@ AWS Tampermonkey scripts
 * `AntonioFeijaoUK-aws-account-information.js`
 
   This script needs help! How do I add a div/banner on the page to present this information?
-  
   
