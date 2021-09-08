@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name         AntonioFeijaoUK-aws-account-information
 // @namespace    https://*.console.aws.amazon.com/*
-// @version      2.0
+// @version      2.1
 // @description  This script logs on the browser console the AWS account name, id, numer, etc.. that you are currently logged in.
 // @author       AntonioFeijaoUK
-// @url          https://raw.githubusercontent.com/AntonioFeijaoUK/aws-tampermonkey-scripts/
+// @updateURL    https://raw.githubusercontent.com/AntonioFeijaoUK/aws-tampermonkey-scripts/main/AntonioFeijaoUK-aws-account-information.js
 // @match        https://*.console.aws.amazon.com/*
 // @icon         https://console.aws.amazon.com/favicon.ico?aws.amazon.com
 // ==/UserScript==
