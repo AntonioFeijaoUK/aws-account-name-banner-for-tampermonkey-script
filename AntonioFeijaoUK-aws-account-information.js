@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         AntonioFeijaoUK-aws-account-information
 // @namespace    https://*.console.aws.amazon.com/*
-// @version      0.1
+// @version      1.2
 // @description  This script logs on the browser console the AWS account name, id, numer, etc.. that you are currently logged in.
 // @author       AntonioFeijaoUK
 // @match        https://*.console.aws.amazon.com/*
@@ -11,58 +11,77 @@
 //--- The @grant directive is used to restore the proper sandbox.
 
 (function () {
-  "use strict";
+    "use strict";
 
-  // Your code here...
-  //console.log("Something hello world from tampermonkey");
+    // Your code here...
+    //console.log("Something hello world from tampermonkey");
 
-  function fullDecode(input) {
-    let decoded = decodeURIComponent(input);
-    return decoded == input ? decoded : fullDecode(decoded);
-  }
+    function fullDecode(input) {
+        let decoded = decodeURIComponent(input);
+        return decoded == input ? decoded : fullDecode(decoded);
+    }
 
-  let userInfo = document.cookie.replace(
-    /(?:(?:^|.*;\s*)aws-userInfo\s*\=\s*([^;]*).*$)|^.*$/,
-    "$1"
-  );
+    let userInfo = document.cookie.replace(
+        /(?:(?:^|.*;\s*)aws-userInfo\s*\=\s*([^;]*).*$)|^.*$/,
+        "$1"
+    );
 
-  //alert(JSON.stringify(JSON.parse(fullDecode(userInfo)), null, 4));
-  //console.log(JSON.stringify(JSON.parse(fullDecode(userInfo)), null, 4));
+    //alert(JSON.stringify(JSON.parse(fullDecode(userInfo)), null, 4));
+    //console.log(JSON.stringify(JSON.parse(fullDecode(userInfo)), null, 4));
 
-  //let AntonioAccountInfo = JSON.stringify(
-  //    JSON.parse(fullDecode(userInfo)),
-  //   null,
-  //  4
-  // );
+    //let AntonioAccountInfo = JSON.stringify(
+    //    JSON.parse(fullDecode(userInfo)),
+    //   null,
+    //  4
+    // );
 
-  let AntonioAccountInfo = JSON.parse(fullDecode(userInfo));
-
-  let Username     = AntonioAccountInfo.username.split('/');
-  let AccountName  = AntonioAccountInfo.issuer.split(" ")[1].split("/")[0];
-  let AccountNumber = AntonioAccountInfo.alias;
+    let AntonioAccountInfo = JSON.parse(fullDecode(userInfo));
 
 
+    //let user_name = AntonioAccountInfo.username.split('/');
+    let user_name = AntonioAccountInfo.username.split('_')[1];
+    let account_name = AntonioAccountInfo.issuer.split(" ")[1].split("/")[0];
+    let account_number = AntonioAccountInfo.alias;
 
 
-  if (AccountName) {
-    console.log("Username     : " + Username[1]);
-    console.log("Account name : " + AccountName);
-    console.log("AccoutNumber : " + AccountNumber);
-  };
 
-  /// >>> HELP!! How do I add a proper div "banner" on the AWS Webpage ?
-  
-    //var AntonioElement = document.createElement("AntonioElement");
 
-    //AntonioElement.innerHTML = '<div id="AntonioElement"> <center> <pre> ' + AntonioAccountInfo + '</pre> </center> </div>';
+    if (account_name) {
+        console.log("account number : " + account_number);
+        console.log("  account name : " + account_name);
+        console.log("     user name : " + user_name);
 
-    //AntonioElement.style = "position: -webkit-sticky;  position: sticky;  top: 0;  padding: 50px; background-color: orange; color: white;";
 
-    //document.body.insertBefore(AntonioElement, document.body.firstChild);
+        // --------------------------------------------------------------------------
+        // div code credits goes to @barney_parker (https://twitter.com/barney_parker)
 
-    // https://stackoverflow.com/questions/6013861/how-to-insertbefore-element-in-body-tag
-    //document.head.prepend(AntonioElement);
-    //document.body.prepend(AntonioElement);
+        const div = document.createElement('div');
+
+        div.style['background-color'] = '#232f3e';
+        div.style.color = '#f8991d';
+
+        div.style['font-size'] = 'medium';
+        div.style.hr = 'border: 2px solid green; border-radius: 5px;';
+
+        div.style.padding = '0.25em';
+
+        //div.innerHTML = '<span>account number : ' + account_number + '</span>' + '<br>' +
+        //                '<span>account name :   ' + account_name   + '</span>' + '<br>' +
+        //                '<span>user name :      ' + user_name      + '</span>' + '<br>' +
+        //                '<hr>';
+
+        div.innerHTML = '<center><span>' + account_number + '  |  ' + user_name + ' @ ' + account_name + '</span></center><hr>';
+
+        const parent = document.getElementById('awsc-navigation-container');
+
+        parent.prepend(div);
+
+        // --------------------------------------------------------------------------
+
+
+
+
+    };
 
 
 })();
