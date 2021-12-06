@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         AntonioFeijaoUK-aws-account-information
 // @namespace    https://*.console.aws.amazon.com/*
-// @version      2.2
+// @version      3.1
 // @description  This script logs on the browser console the AWS account ID, the username (role) and account name that you are currently logged in.
 // @author       AntonioFeijaoUK (https://antonio.cloud/
 // @updateURL    https://raw.githubusercontent.com/AntonioFeijaoUK/aws-tampermonkey-scripts/main/AntonioFeijaoUK-aws-account-information.js
@@ -38,10 +38,22 @@
   let account_name = AntonioAccountInfo.issuer.split(" ")[1].split("/")[0];
   let account_number = AntonioAccountInfo.alias;
 
+  //let region = decodeURIComponent(document.cookie).split(";")[6].split("=")[1];
+  let region = decodeURIComponent(document.cookie.replace(/(?:(?:^|.*;\s*)noflush_Region\s*\=\s*([^;]*).*$)|^.*$/,"$1"));
+
+
+  ///let assume_role_account_number = decodeURIComponent(document.cookie).split(";")[17].split(",")[1].split('"')[3];
+  //let assume_role_account_name   = decodeURIComponent(document.cookie).split(";")[19].split(",")[3].split(":")[1];
+
   if (account_name) {
     console.log("account number : " + account_number);
     console.log("     user name : " + user_name);
     console.log("  account name : " + account_name);
+    console.log("        region : " + region);
+
+   //console.log("assume_role_account_number : " + assume_role_account_number);
+   // console.log("assume_role_account_name   : " + assume_role_account_name);
+
 
     // --------------------------------------------------------------------------
     // div code's credits goes to @barney_parker (https://twitter.com/barney_parker)
@@ -70,8 +82,7 @@
     div.style["z-index"] = "10000";
     div.style.top = "0";
 
-    div.innerHTML =
-      '<span>' + account_number + '  |  <b>' + user_name + '</b>  @  <b>' + account_name + '</b></span><hr>';
+    div.innerHTML = '<span>' + user_name + ' - ' + region + ' - ' + account_number + ' - <strong>' + account_name + '</strong></span>';
 
     const parent = document.getElementById("awsc-navigation-container");
 
