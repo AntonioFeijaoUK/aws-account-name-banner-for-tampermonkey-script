@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         AntonioFeijaoUK-aws-account-information
 // @namespace    https://*.console.aws.amazon.com/*
-// @version      3.1
+// @version      3.3
 // @description  This script logs on the browser console the AWS account ID, the username (role) and account name that you are currently logged in.
 // @author       AntonioFeijaoUK (https://antonio.cloud/
 // @updateURL    https://raw.githubusercontent.com/AntonioFeijaoUK/aws-tampermonkey-scripts/main/AntonioFeijaoUK-aws-account-information.js
@@ -34,7 +34,22 @@
   let AntonioAccountInfo = JSON.parse(fullDecode(userInfo));
 
   //let user_name = AntonioAccountInfo.username.split('/');
-  let user_name = AntonioAccountInfo.username.split("_")[1];
+  //let user_name = AntonioAccountInfo.username.split("_")[1];
+  //console.log("     user name : " + user_name);
+
+  function getUsername(user_name) {
+      if (AntonioAccountInfo.username.split("_")[1] == null) {
+          let user_name = '[<b>' + AntonioAccountInfo.username.split("/")[0] + '</b>]';
+          return user_name;
+      } else {
+          let user_name = '[' + AntonioAccountInfo.username.split("_")[1] + ']';
+          return user_name;
+      }
+  }
+
+  let user_name = getUsername(AntonioAccountInfo);
+
+
   let account_name = AntonioAccountInfo.issuer.split(" ")[1].split("/")[0];
   let account_number = AntonioAccountInfo.alias;
 
