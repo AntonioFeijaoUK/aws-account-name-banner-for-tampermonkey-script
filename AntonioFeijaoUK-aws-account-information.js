@@ -1,10 +1,11 @@
 // ==UserScript==
 // @name         AntonioFeijaoUK-aws-account-information
 // @namespace    https://*.console.aws.amazon.com/*
-// @version      3.3
+// @version      3.4
 // @description  This script logs on the browser console the AWS account ID, the username (role) and account name that you are currently logged in.
 // @author       AntonioFeijaoUK (https://antonio.cloud/
 // @updateURL    https://raw.githubusercontent.com/AntonioFeijaoUK/aws-tampermonkey-scripts/main/AntonioFeijaoUK-aws-account-information.js
+// @downloadURL    https://raw.githubusercontent.com/AntonioFeijaoUK/aws-tampermonkey-scripts/main/AntonioFeijaoUK-aws-account-information.js
 // @match        https://*.console.aws.amazon.com/*
 // @icon         https://console.aws.amazon.com/favicon.ico?aws.amazon.com
 // ==/UserScript==
@@ -39,7 +40,7 @@
 
   function getUsername(user_name) {
       if (AntonioAccountInfo.username.split("_")[1] == null) {
-          let user_name = '[<b>' + AntonioAccountInfo.username.split("/")[0] + '</b>]';
+          let user_name = '[<span style="background-color:orange;color:white;"><b>' + AntonioAccountInfo.username.split("/")[0] + '</b></span>]';
           return user_name;
       } else {
           let user_name = '[' + AntonioAccountInfo.username.split("_")[1] + ']';
@@ -81,6 +82,7 @@
     //        div.style.hr = 'border: 2px solid green; border-radius: 5px;';
     //        div.style.padding = '0.25em';
 
+    //div.style.position = "absolute";
     div.style.height = "40px";
     div.style["font-size"] = "16px";
     div.style["line-height"] = "40px";
