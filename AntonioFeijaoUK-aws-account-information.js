@@ -69,6 +69,12 @@
     //  cat ./results/00-list-of-accounts-in-org.txt | jq -r '.Accounts[] | "\(.Name)\t \(.Id);" ' | tr -d '^ ' | tr ' ' '_' | sort --ignore-case | awk '{print $2 "\t" $1 }' | sed s/"^"/"'"/g | sed s/"\$"/"',"/g | sed s/';\t'/"': '"/g
     //
 
+    // ******************************************************************************************************************************
+    // Another way of sorting AWS accounts to create the list for "cost dictionary"
+    //
+    // jq -r '.Accounts[] | "\"\(.Id)\" : \"\(.Name)\","' ./results/00-list-of-accounts-in-org.txt | tr '"' "'" | sort -k2 --ignore-case
+    //******************************************************************************************************************************
+
     // Dictionary to map account IDs to account names
     const dictionary = {
         'accountid1': 'account_name1',
