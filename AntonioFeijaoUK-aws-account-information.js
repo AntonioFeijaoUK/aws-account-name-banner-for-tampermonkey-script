@@ -81,7 +81,7 @@
         'accountid2': 'account_name2',
         'accountid3': 'account_name3',
         'accountid4': 'account_name4',
-        'accountid5': 'account_name5',
+        'accountid5': 'account_name5'
     };
 
     // Retrieve region from cookies
